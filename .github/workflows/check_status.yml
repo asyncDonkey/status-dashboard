@@ -25,8 +25,11 @@ jobs:
           pip install requests firebase-admin google-cloud-firestore
 
       - name: Create credentials file from secret
+    # Questo è il nuovo metodo, più sicuro per stringhe complesse
+        env:
+            FIREBASE_CREDENTIALS_JSON: ${{ secrets.FIREBASE_CREDENTIALS }}
         run: |
-          echo "${{ secrets.FIREBASE_CREDENTIALS }}" > firebase-credentials.json
+            echo "$FIREBASE_CREDENTIALS_JSON" > firebase-credentials.json
 
       - name: Run status checker script
         run: python3 status_checker.py
